@@ -6,17 +6,17 @@
 /*   By: luqli <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 13:11:50 by luqli             #+#    #+#             */
-/*   Updated: 2023/10/12 13:18:40 by luqli            ###   ########.fr       */
+/*   Updated: 2023/10/14 14:21:21 by luqli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char *ft_strnstr(const char *big, const char *little, size_t len)
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
 	size_t	i;
 	size_t	c;
-	
+
 	i = 0;
 	c = 0;
 	if (little[0] == '\0')

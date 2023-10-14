@@ -6,7 +6,7 @@
 /*   By: luqli <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 14:54:37 by luqli             #+#    #+#             */
-/*   Updated: 2023/10/11 15:25:19 by luqli            ###   ########.fr       */
+/*   Updated: 2023/10/14 14:22:06 by luqli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_strrchr(const char *s, int c)
 		{
 			i++;
 		}
-		return (char *)(s + i);
+		return ((char *)(s + i));
 	}
 	return (NULL);
 }
