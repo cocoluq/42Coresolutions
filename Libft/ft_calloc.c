@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcmp.c                                        :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luqli <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/14 22:08:08 by luqli             #+#    #+#             */
-/*   Updated: 2023/10/14 22:08:08 by luqli            ###   ########.fr       */
+/*   Created: 2023/10/15 10:33:18 by luqli             #+#    #+#             */
+/*   Updated: 2023/10/15 10:33:20 by luqli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_memcmp(const void *s1, const void *s2, size_t n)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	char	*str1;
-	char	*str2;
-	size_t	i;
+	void	*p;
 
-	i = 0;
-	str1 = (char *)s1;
-	str2 = (char *)s2;
-	while (i < n)
+	p = malloc(nmemb * size);
+	if (!p)
 	{
-		if (str1[i] != str2[i])
-		{
-			return (str1[i] - str2[i]);
-		}
-		i++;
+		return (NULL);
 	}
-	return (0);
+	ft_bzero(p, nmemb * size);
+	return (p);
 }
