@@ -23,7 +23,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 	{
 		c++;
 	}
-	while (src[i] != '\0' && (c + i) < size)
+	while (src[i] != '\0' && (c + i) < size - ft_strlen(dst) - 1)
 	{
 		dst[c + i] = src[i];
 		i++;
@@ -42,19 +42,19 @@ int main() {
 
     printf("Source String: %s\n", source);
 
-    // 使用标准库的 strlcat 函数
+    // standard strlcat
     size_t result_std = strcat(dest1, source);
 
     printf("Standard Library - Modified Destination String: %s\n", dest1);
     printf("Result of strlcat: %zu\n", strlen(result_std));
 
-    // 使用自定义的 ft_strlcat 函数
+    // ft_strlcat
     size_t result_custom = ft_strlcat(dest2, source, dest_size);
 
     printf("Custom Function - Modified Destination String: %s\n", dest2);
     printf("Result of ft_strlcat: %zu\n", result_custom);
 
-    // 比较两个函数的结果
+    // Diff
     if (strlen(result_std) == result_custom && strcmp(dest1, dest2) == 0) {
         printf("Both functions produced the same output.\n");
     } else {

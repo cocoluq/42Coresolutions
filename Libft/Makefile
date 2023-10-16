@@ -6,7 +6,7 @@
 #    By: luqli <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/09 11:31:23 by luqli             #+#    #+#              #
-#    Updated: 2023/10/09 12:25:12 by luqli            ###   ########.fr        #
+#    Updated: 2023/10/16 13:45:49 by luqli            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ CFLAGS = -Wall -Wextra -Werror
 NAME = libft.a
 
 all
-clean
+clean:
+	rm -rf *.o
 fclean
 re
