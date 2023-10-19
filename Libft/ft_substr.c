@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luqli <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/14 16:37:15 by luqli             #+#    #+#             */
-/*   Updated: 2023/10/14 16:37:15 by luqli            ###   ########.fr       */
+/*   Created: 2023/10/19 16:56:35 by luqli             #+#    #+#             */
+/*   Updated: 2023/10/19 16:56:35 by luqli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memset(void *s, int c, size_t n)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	size_t	i;
-	char	*p;
+	unsigned int	i;
+	char			*ss;
 
-	p = (char *)s;
 	i = 0;
-	while (i < n)
+	ss = (char *)malloc(sizeof(char) * (len + 1));
+	if (!s)
 	{
-		p[i] = c;
+		return (NULL);
+	}
+	while (s[i] && i < len)
+	{
+		ss[i] = s[start + i];
 		i++;
 	}
-	return (s);
+	ss[len] = '\0';
+	return (ss);
 }

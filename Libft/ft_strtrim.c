@@ -1,28 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luqli <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/14 16:37:15 by luqli             #+#    #+#             */
-/*   Updated: 2023/10/14 16:37:15 by luqli            ###   ########.fr       */
+/*   Created: 2023/10/19 20:08:02 by luqli             #+#    #+#             */
+/*   Updated: 2023/10/19 20:08:02 by luqli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memset(void *s, int c, size_t n)
+char	*ft_strtrim(char const *s1, char const *set)
 {
+	char	*str;
 	size_t	i;
-	char	*p;
+	size_t	j;
 
-	p = (char *)s;
 	i = 0;
-	while (i < n)
+	j = ft_strlen(s1) - 1;
+	if (!str)
 	{
-		p[i] = c;
+		return (NULL);
+	}
+	if(!set)
+	{
+		return (ft_strdup(s1));
+	}
+	while (si[i] && ft_strchr(set, s1[i]))
+	{
 		i++;
 	}
-	return (s);
+	while (s1[j] && ft_strchr(set, s1[j]))
+	{
+		j--;
+	}
+	str = ft_substr(str, i, j - i + 1);
+	return(str);
 }

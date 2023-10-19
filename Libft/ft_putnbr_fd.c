@@ -1,28 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luqli <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/14 16:37:15 by luqli             #+#    #+#             */
-/*   Updated: 2023/10/14 16:37:15 by luqli            ###   ########.fr       */
+/*   Created: 2023/10/19 19:44:29 by luqli             #+#    #+#             */
+/*   Updated: 2023/10/19 19:44:29 by luqli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memset(void *s, int c, size_t n)
+void	ft_putnbr_fd(int n, int fd)
 {
-	size_t	i;
-	char	*p;
-
-	p = (char *)s;
-	i = 0;
-	while (i < n)
+		if (n == -2147483648)
 	{
-		p[i] = c;
-		i++;
+		ft_putstr_fd("-2147483648", fd);
 	}
-	return (s);
+	else if (n < 0)
+	{
+		n = -n;
+		ft_putchar_fd('-',fd);
+		ft_putnbr_fd(n, fd);
+	}
+	else if (n > 9)
+	{
+		ft_putnbr_fd(n / 10, fd);
+		ft_putchar_fd(n % 10 + '0', fd);
+	}
+	else
+	{
+		ft_putchar_fd(n + '0', fd);
+	}
 }

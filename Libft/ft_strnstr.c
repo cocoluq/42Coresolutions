@@ -6,7 +6,7 @@
 /*   By: luqli <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 13:11:50 by luqli             #+#    #+#             */
-/*   Updated: 2023/10/14 14:21:21 by luqli            ###   ########.fr       */
+/*   Updated: 2023/10/19 21:31:37 by luqli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 		}
 		if (little[c] == '\0')
 		{
-			return ((char *)(big + i));
+			return ((char *)big + i);
 		}
 		i++;
 	}
