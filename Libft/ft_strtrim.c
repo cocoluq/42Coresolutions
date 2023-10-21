@@ -24,7 +24,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	{
 		return (NULL);
 	}
-	if(!set)
+	if (!set)
 	{
 		return (ft_strdup(s1));
 	}
@@ -37,5 +37,5 @@ char	*ft_strtrim(char const *s1, char const *set)
 		j--;
 	}
 	str = ft_substr(str, i, j - i + 1);
-	return(str);
+	return (str);
 }

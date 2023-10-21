@@ -12,12 +12,30 @@
 
 #include "libft.h"
 
+static int	length_of_int(int i)
+{
+	int	len;
+
+	len = 0;
+	if (i < 0)
+	{
+		len += 1;
+	}
+	while (i != 0)
+	{
+		i /= 10;
+		len++;
+	}
+	return (len);
+}
+
 char	*ft_itoa(int n)
 {
 	char	*str;
-	int	i;
+	int		len;
 
-	str = (char *)malloc(sizeof(char) * (i + 1))
+	len = length_of_int(n);
+	str = (char *)malloc(sizeof(char) * (len + 1));
 	if (!str)
 	{
 		return (NULL);
@@ -25,7 +43,7 @@ char	*ft_itoa(int n)
 	if (n < 0)
 	{
 		str[0] = '-';
-		ft_itoa(-n);
+		str = ft_itoa(-n);// returns only numbers, no "-"
 	}
 	else if (n == 0)
 	{
@@ -35,7 +53,9 @@ char	*ft_itoa(int n)
 	{
 		while (n != 0)
 		{
-			
+			str[len - 1] = (n % 10) + '0';
+			n /= 10;
+			len--;
 		}
 	}
 	return (str);
