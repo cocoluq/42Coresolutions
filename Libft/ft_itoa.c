@@ -35,28 +35,40 @@ char	*ft_itoa(int n)
 	int		len;
 
 	len = length_of_int(n);
-	str = (char *)malloc(sizeof(char) * (len + 1));
-	if (!str)
-	{
-		return (NULL);
-	}
+	str = (char *)calloc(len + 1, sizeof(char));
 	if (n < 0)
 	{
 		str[0] = '-';
-		str = ft_itoa(-n);// returns only numbers, no "-"
+		n = -n;
 	}
 	else if (n == 0)
 	{
 		str[0] = '0';
 	}
-	else
+	while (n != 0)
 	{
-		while (n != 0)
-		{
-			str[len - 1] = (n % 10) + '0';
-			n /= 10;
-			len--;
-		}
+		str[len - 1] = (n % 10) + '0';
+		n /= 10;
+		len--;
 	}
 	return (str);
 }
+/*
+#include <stdio.h>
+#include <stdlib.h>
+int main()
+{
+    int num = -12345;
+    char *result = ft_itoa(num);
+    if (result)
+    {
+        printf("Integer: %d\n", num);
+        printf("String: %s\n", result);
+        free(result);
+    }
+    else
+    {
+        printf("Memory allocation failed.\n");
+    }
+}
+*/
