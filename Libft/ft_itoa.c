@@ -12,8 +12,6 @@
 
 #include "libft.h"
 
-#include "libft.h"
-
 static int	length_of_int(int i)
 {
 	int	len;
