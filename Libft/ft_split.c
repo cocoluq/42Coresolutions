@@ -15,40 +15,111 @@
 static int	count_split_words(const char *s, char c)
 {
 	int	i;
-	int	count;
+	int	words;
 
 	i = 0;
-	count = 0;
+	words = 0;
 	while (s[i] != '\0')
 	{
+		while (s[i] == c && s[i])
+		{
+			i++;
+		}
 		if (s[i] != c && s[i])
 		{
+			words++;
 			i++;
-		}
-		else if (s[i] == c)
-		{
-			count++;
-			i++;
+			while (s[i] != c && s[i])
+			{
+				i++;
+			}
 		}
 	}
-	return (i);
+	return (words);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	*array;
-	char	a;
-	char	b;
+	char	**array;
+	size_t	len;
 	size_t	i;
 
-	array = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
+	len = 0;
+	i = 0;
+	array = (char **)malloc(sizeof(char *) * (count_split_words(s, c) + 1));
 	if (!array)
-	{
 		return (NULL);
+	while (*s)
+	{
+		while (*s == c && *s)
+			s++;
+		if (*s != c && *s)
+		{
+			if (!ft_strchr(s, c))
+				len = ft_strlen(s);
+			else
+				len = ft_strchr(s, c) - s;
+			array[i++] = ft_substr(s, 0, len);
+			s += len;
+		}
 	}
-
-	//find the address of c: strchr
-	//copy [0]-[c - 1] into the ar[0]: strcpy
-	//copy [c + 1]-['\0'] into ar[1]: strcpy
-	//allocate ar
+	array[i] = '\0';
+	return (array);
 }
+
+/* int main()
+{
+    // Test 1: Basic test with a single delimiter
+    char *test_string1 = "apple,banana,cherry,";
+    char delimiter1 = ',';
+    char **result1 = ft_split(test_string1, delimiter1);
+
+    printf("Test 1:\n");
+    for (int i = 0; result1[i] != NULL; i++)
+    {
+        printf("%s\n", result1[i]);
+        free(result1[i]);
+    }
+    free(result1);
+
+    // Test 2: Handling multiple consecutive delimiters
+    char *test_string2 = "apple,,banana,,cherry";
+    char delimiter2 = ',';
+    char **result2 = ft_split(test_string2, delimiter2);
+
+    printf("\nTest 2:\n");
+    for (int i = 0; result2[i] != NULL; i++)
+    {
+        printf("%s\n", result2[i]);
+        free(result2[i]);
+    }
+    free(result2);
+
+    // Test 3: Handling a string with no delimiters
+    char *test_string3 = "onetwothree";
+    char delimiter3 = ',';
+    char **result3 = ft_split(test_string3, delimiter3);
+
+    printf("\nTest 3:\n");
+    for (int i = 0; result3[i] != NULL; i++)
+    {
+        printf("%s\n", result3[i]);
+        free(result3[i]);
+    }
+    free(result3);
+
+    // Test 4: Handling an empty string
+    char *test_string4 = "";
+    char delimiter4 = ',';
+    char **result4 = ft_split(test_string4, delimiter4);
+
+    printf("\nTest 4:\n");
+    for (int i = 0; result4[i] != NULL; i++)
+    {
+        printf("%s\n", result4[i]);
+        free(result4[i]);
+    }
+    free(result4);
+
+    return 0;
+} */

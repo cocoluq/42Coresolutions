@@ -19,16 +19,16 @@ char	*ft_strtrim(char const *s1, char const *set)
 	size_t	j;
 
 	i = 0;
-	j = ft_strlen(s1) - 1;
-	if (!str)
+	if (!s1)
 	{
 		return (NULL);
 	}
+	j = ft_strlen(s1) - 1;
 	if (!set)
 	{
 		return (ft_strdup(s1));
 	}
-	while (si[i] && ft_strchr(set, s1[i]))
+	while (s1[i] && ft_strchr(set, s1[i]))
 	{
 		i++;
 	}
@@ -36,6 +36,6 @@ char	*ft_strtrim(char const *s1, char const *set)
 	{
 		j--;
 	}
-	str = ft_substr(str, i, j - i + 1);
+	str = ft_substr(s1, i, j - i + 1);
 	return (str);
 }
