@@ -19,48 +19,49 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 
 	i = 0;
 	c = 0;
-	while (dst[c] != '\0')
+	while (dst[c] != '\0' && c < size)
 	{
 		c++;
 	}
-	while (src[i] != '\0' && (c + i) < size - ft_strlen(dst) - 1)
+	while (src[i] != '\0' && (c + i + 1) < size)
 	{
 		dst[c + i] = src[i];
 		i++;
 	}
-	dst[c + i] = '\0';
-	return (c + i);
+	if (c < size)
+	{
+		dst[c + i] = '\0';
+	}
+	return (c + ft_strlen(src));
 }
-/*
-#inlcude <string.h>
 
-int main() {
-    char dest1[20] = "Hello, ";
-    char dest2[20] = "Hello, ";
-    char source[] = "world!";
-    size_t dest_size = sizeof(dest1);
+/*#include <stdio.h>
+#include <string.h>
+#include <bsd/string.h>
 
-    printf("Source String: %s\n", source);
-
-    // standard strlcat
-    size_t result_std = strcat(dest1, source);
-
-    printf("Standard Library - Modified Destination String: %s\n", dest1);
-    printf("Result of strlcat: %zu\n", strlen(result_std));
+int main(void) {
+    char dest[20] = "Hello, ";
+    const char *source = "world!";
+    size_t size = sizeof(dest);
 
     // ft_strlcat
-    size_t result_custom = ft_strlcat(dest2, source, dest_size);
+    size_t result_ft = ft_strlcat(dest, source, size);
+    printf("ft_strlcat: %s, length: %zu\n", dest, result_ft);
 
-    printf("Custom Function - Modified Destination String: %s\n", dest2);
-    printf("Result of ft_strlcat: %zu\n", result_custom);
+    char dest2[20] = "Hello, ";
+    const char *source2 = "world!";
+    size_t size2 = sizeof(dest2);
 
-    // Diff
-    if (strlen(result_std) == result_custom && strcmp(dest1, dest2) == 0) {
-        printf("Both functions produced the same output.\n");
+    // strlcat
+    size_t result_sys = strlcat(dest2, source2, size2);
+    printf("strlcat: %s, length: %zu\n", dest2, result_sys);
+
+    // Compare results
+    if (result_ft == result_sys && strcmp(dest, dest2) == 0) {
+        printf("Both functions produced the same result.\n");
     } else {
-        printf("There is a difference between the functions' output.\n");
+        printf("Functions produced different results.\n");
     }
 
     return 0;
-}
-*/
+}*/
