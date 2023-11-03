@@ -12,11 +12,15 @@
 
 #include "libft.h"
 
-static int	length_of_int(int i)
+static unsigned int	length_of_int(int i)
 {
-	int	len;
+	unsigned int	len;
 
 	len = 0;
+	if (i == 0)
+	{
+		return (1);
+	}
 	if (i < 0)
 	{
 		len += 1;
@@ -31,8 +35,8 @@ static int	length_of_int(int i)
 
 char	*ft_itoa(int n)
 {
-	char	*str;
-	int		len;
+	char			*str;
+	unsigned int	len;
 
 	len = length_of_int(n);
 	str = (char *)malloc((len + 1) * sizeof(char));
@@ -40,18 +44,18 @@ char	*ft_itoa(int n)
 		return (NULL);
 	if (n < 0)
 	{
+		if (n == -2147483648)
+			return (ft_strdup("-2147483648"));
 		str[0] = '-';
 		n = -n;
 	}
 	else if (n == 0)
-	{
 		str[0] = '0';
-	}
-	while (n != 0)
+	str[len] = '\0';
+	while (len-- && n != 0)
 	{
-		str[len - 1] = (n % 10) + '0';
+		str[len] = (n % 10) + '0';
 		n /= 10;
-		len--;
 	}
 	return (str);
 }

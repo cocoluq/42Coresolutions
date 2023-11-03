@@ -6,7 +6,7 @@
 /*   By: luqli <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 14:54:37 by luqli             #+#    #+#             */
-/*   Updated: 2023/11/02 13:35:07 by luqli            ###   ########.fr       */
+/*   Updated: 2023/11/02 21:57:39 by luqli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_strrchr(const char *s, int c)
 	}
 	while (i >= 0)
 	{
-		if (s[i] == c)
+		if (s[i] == (unsigned char)c)
 		{
 			return ((char *)s + i);
 		}
