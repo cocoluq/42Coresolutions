@@ -63,7 +63,7 @@ char	**ft_split(char const *s, char c)
 			s += len;
 		}
 	}
-	array[i] = '\0';
+	array[i] = NULL;
 	return (array);
 }
 
