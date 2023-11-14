@@ -44,17 +44,17 @@ char	*ft_itoa(int n)
 		return (NULL);
 	if (n < 0)
 	{
-		if (n == -2147483648)
-			return (ft_strdup("-2147483648"));
 		str[0] = '-';
-		n = -n;
 	}
 	else if (n == 0)
 		str[0] = '0';
 	str[len] = '\0';
 	while (len-- && n != 0)
 	{
-		str[len] = (n % 10) + '0';
+		if (n < 0)
+			str[len] = -(n % 10) + '0';
+		else
+			str[len] = (n % 10) + '0';
 		n /= 10;
 	}
 	return (str);
@@ -64,7 +64,7 @@ char	*ft_itoa(int n)
 #include <stdlib.h>
 int main()
 {
-    int num = -12345;
+    int num = -2147483648;
     char *result = ft_itoa(num);
     if (result)
     {
