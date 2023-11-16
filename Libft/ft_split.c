@@ -38,13 +38,42 @@ static int	count_split_words(const char *s, char c)
 	return (words);
 }
 
+static int	check_array(char **array, char *str)
+{
+	int	i;
+
+	i = 0;
+	if (!str)
+	{
+		while (array[i])
+		{
+			free(array[i]);
+			i++;
+		}
+		free(array);
+		return (0);
+	}
+	return (1);
+}
+
+static size_t	allocate_str(char const *s, char c)
+{
+	size_t	len;
+
+	len = 0;
+	if (!ft_strchr(s, c))
+		len = ft_strlen(s);
+	else
+		len = ft_strchr(s, c) - s;
+	return (len);
+}
+
 char	**ft_split(char const *s, char c)
 {
 	char	**array;
 	size_t	len;
 	size_t	i;
 
-	len = 0;
 	i = 0;
 	array = (char **)malloc(sizeof(char *) * (count_split_words(s, c) + 1));
 	if (!array)
@@ -55,11 +84,10 @@ char	**ft_split(char const *s, char c)
 			s++;
 		if (*s != c && *s)
 		{
-			if (!ft_strchr(s, c))
-				len = ft_strlen(s);
-			else
-				len = ft_strchr(s, c) - s;
-			array[i++] = ft_substr(s, 0, len);
+			len = allocate_str(s, c);
+			array[i] = ft_substr(s, 0, len);
+			if (!check_array(array, array[i++]))
+				return (NULL);
 			s += len;
 		}
 	}
