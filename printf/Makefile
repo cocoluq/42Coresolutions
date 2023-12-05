@@ -21,10 +21,10 @@ $(NAME): $(OBJS)
 all: $(NAME)
 
 clean:
-	rm -rf $()
+	rm -rf $(OBJS)
 
 fclean: clean
-	rm -rf $()
+	rm -rf $(NAME)
 
 re: fclean all
 .PHONY: all, clean, fclean, re
