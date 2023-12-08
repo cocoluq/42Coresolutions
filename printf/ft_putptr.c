@@ -12,15 +12,30 @@
 
 #include "ft_printf.h"
 
-int	ft_putptr(void *ptr)
+static int	length_of_pointer(unsigned long long *ptr)
 {
 	int	len;
 
-	len = ft_strlen(&ptr);
+	len = 0;
+	while (*ptr)
+	{
+		*ptr /= 16;
+		len++;
+	}
+	return (len);
+}
+
+int	ft_putptr(unsigned long long ptr)
+{
+	int	len;
+
+	len = length_of_pointer(&ptr);
 	if (!ptr)
 	{
-		
+		write(1, "(nil)", 5);
+		return (5);
 	}
-	write(1, &ptr, len);
+	len += write(1, "0x", 2);
+	len += ft_puthex_low(ptr);
 	return (len);
 }

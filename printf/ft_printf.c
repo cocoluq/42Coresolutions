@@ -22,13 +22,15 @@ static int	ft_format_check(const char format, va_list args)
 	if (format == 's')
 		len += ft_putstr(va_arg(args, char *));
 	if (format == 'p')
-		len += ft_putptr(va_arg(args, void *));
+		len += ft_putptr(va_arg(args, unsigned long long));
 	if (format == 'd' || format == 'i')
 		len += ft_putnbr(va_arg(args, int));
 	if (format == 'u')
 		len += ft_putun(va_arg(args, unsigned int));
-	if (format == 'x' || format == 'X')
-		len += ft_puthex(va_arg(args, int));
+	if (format == 'x')
+		len += ft_puthex_low(va_arg(args, unsigned int));
+	if (format == 'X')
+		len += ft_puthex_up(va_arg(args, unsigned int));
 	if (format == '%')
 		len += ft_putchar('%');
 	return (len);
@@ -37,20 +39,20 @@ static int	ft_format_check(const char format, va_list args)
 int	ft_printf(const char *format, ...)
 {
 	va_list	args;
-	int	i;
-	int	len;
+	int		i;
+	int		len;
 
 	i = 0;
 	len = 0;
 	if (!format)
 		return (0);
-	va_start(args, format);// access the list of variable parameters
+	va_start(args, format);
 	while (format[i])
 	{
 		if (format[i] == '%')
 		{
 			len += ft_format_check(format[i + 1], args);
-			i++;// skip the second letter of the format
+			i++;
 		}
 		else
 			len += ft_putchar(format[i]);
@@ -59,6 +61,7 @@ int	ft_printf(const char *format, ...)
 	va_end(args);
 	return (len);
 }
+
 /*
 int	main()
 {

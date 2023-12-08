@@ -47,8 +47,6 @@ int	ft_putnbr(int nbr)
 		ft_putchar(nbr % 10 + '0');
 	}
 	else
-	{
 		ft_putchar(nbr + '0');
-	}
 	return (length_of_int(nbr));
 }

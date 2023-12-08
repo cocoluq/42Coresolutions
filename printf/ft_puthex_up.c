@@ -1,40 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putun.c                                         :+:      :+:    :+:   */
+/*   ft_puthex_up.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luqli <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/04 19:31:43 by luqli             #+#    #+#             */
-/*   Updated: 2023/12/04 21:21:48 by luqli            ###   ########.fr       */
+/*   Created: 2023/12/08 16:09:13 by luqli             #+#    #+#             */
+/*   Updated: 2023/12/08 16:09:15 by luqli            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	length_of_int(int i)
+int	ft_puthex_up(unsigned int nbr)
 {
-	int	len;
+	char	*base;
+	int		len;
 
+	base = "0123456789ABCDEF";
 	len = 0;
-	if (i == 0)
-		return (1);
-	while (i != 0)
+	if (nbr < 16)
+		len += ft_putchar(base[nbr]);
+	else
 	{
-		i /= 10;
-		len++;
+		len += ft_puthex_up(nbr / 16);
+		len += ft_putchar(base[nbr % 16]);
 	}
 	return (len);
 }
 
-int	ft_putun(unsigned int nbr)
+/*int	main(void)
 {
-	if (nbr > 9)
-	{
-		ft_putun(nbr / 10);
-		ft_putchar(nbr % 10 + '0');
-	}
-	else
-		ft_putchar(nbr + '0');
-	return (length_of_int(nbr));
-}
+	ft_puthex_up(42);
+	return (0);
+}*/

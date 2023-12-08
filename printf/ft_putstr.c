@@ -15,7 +15,7 @@
 int	ft_putstr(char *str)
 {
 	int	len;
-	
+
 	len = ft_strlen(str);
 	if (!str)
 	{
