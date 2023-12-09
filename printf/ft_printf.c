@@ -62,13 +62,9 @@ int	ft_printf(const char *format, ...)
 	return (len);
 }
 
-/*
+/*#include <stdio.h>
 int	main()
 {
-    char *ptr = "ha";
-    int a = printf("%p", ptr);
-    printf("\n");
-    printf("%i", a);
-	// return the length of the address of the pointer
-}
-*/
+	printf("printf: %d\n", -344);
+	ft_printf("ft_printf: %d\n", -344);
+}*/

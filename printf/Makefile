@@ -13,30 +13,24 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 NAME = libftprintf.a
-SCRS = ft_printf.c ft_putchar.c ft_putstr.c ft_putptr.c ft_puthex_low.c\
+SCRS = ft_printf.c\
+		ft_putchar.c ft_putstr.c ft_putptr.c ft_puthex_low.c\
 		ft_puthex_up.c ft_putun.c ft_putnbr.c
 OBJS = $(SCRS:.c=.o)
-LIBFT = libft/libft.a
-
-$(LIBFT):
-	make -C ./libft
 
 $(NAME): $(OBJS)
-	cp $(LIBFT) $(NAME)
 	ar rc $(NAME) $(OBJS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-all: $(LIBFT) $(NAME)
+all: $(NAME)
 
 clean:
-	make clean -C ./libft
-	rm -rf $(OBJS)
+	rm -r $(OBJS)
 
 fclean: clean
-	make fclean -C ./libft
-	rm -rf $(NAME)
+	rm -r $(NAME)
 
 re: fclean all
-.PHONY: all, clean, fclean, re, libft
+.PHONY: all, clean, fclean, re

@@ -32,9 +32,7 @@ static int	length_of_int(int i)
 int	ft_putnbr(int nbr)
 {
 	if (nbr == -2147483648)
-	{
 		ft_putstr("-2147483648");
-	}
 	else if (nbr < 0)
 	{
 		nbr = -nbr;
