@@ -16,6 +16,7 @@ int	ft_putstr(char *str)
 {
 	int	len;
 
+	len = 0;
 	if (!str)
 	{
 		write(1, "(null)", 6);

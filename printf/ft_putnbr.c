@@ -35,9 +35,8 @@ int	ft_putnbr(int nbr)
 		ft_putstr("-2147483648");
 	else if (nbr < 0)
 	{
-		nbr = -nbr;
 		ft_putchar('-');
-		ft_putnbr(nbr);
+		ft_putnbr(-nbr);
 	}
 	else if (nbr > 9)
 	{

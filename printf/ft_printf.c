@@ -45,7 +45,7 @@ int	ft_printf(const char *format, ...)
 	i = 0;
 	len = 0;
 	if (!format)
-		return (0);
+		return (-1);
 	va_start(args, format);
 	while (format[i])
 	{
@@ -65,6 +65,10 @@ int	ft_printf(const char *format, ...)
 /*#include <stdio.h>
 int	main()
 {
-	printf("printf: %d\n", -344);
-	ft_printf("ft_printf: %d\n", -344);
+	int i = printf("%d\n", -1);
+	int j = ft_printf("%d\n", -1);
+	printf("return value of original printf: ");
+	printf("%d\n", i);
+	printf("return value of ft_printf: ");
+	printf("%d\n", j);
 }*/
