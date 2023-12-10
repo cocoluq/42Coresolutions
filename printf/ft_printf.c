@@ -65,10 +65,10 @@ int	ft_printf(const char *format, ...)
 /*#include <stdio.h>
 int	main()
 {
-	int i = printf("%d\n", -1);
-	int j = ft_printf("%d\n", -1);
+	int i = printf("%u\n", -1);
+	int j = ft_printf("%u\n", -1);
 	printf("return value of original printf: ");
-	printf("%d\n", i);
+	printf("%u\n", i);
 	printf("return value of ft_printf: ");
-	printf("%d\n", j);
+	printf("%u\n", j);
 }*/

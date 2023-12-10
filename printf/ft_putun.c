@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static int	length_of_int(int i)
+/*static int	length_of_int(int i)
 {
 	int	len;
 
@@ -25,16 +25,19 @@ static int	length_of_int(int i)
 		len++;
 	}
 	return (len);
-}
+}*/
 
 int	ft_putun(unsigned int nbr)
 {
+	int	len;
+
+	len = 0;
 	if (nbr > 9)
 	{
-		ft_putun(nbr / 10);
-		ft_putchar(nbr % 10 + '0');
+		len += ft_putun(nbr / 10);
+		len += ft_putchar(nbr % 10 + '0');
 	}
 	else
-		ft_putchar(nbr + '0');
-	return (length_of_int(nbr));
+		len += ft_putchar(nbr + '0');
+	return (len);
 }
