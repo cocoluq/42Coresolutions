@@ -12,21 +12,6 @@
 
 #include "ft_printf.h"
 
-/*static int	length_of_int(int i)
-{
-	int	len;
-
-	len = 0;
-	if (i == 0)
-		return (1);
-	while (i != 0)
-	{
-		i /= 10;
-		len++;
-	}
-	return (len);
-}*/
-
 int	ft_putun(unsigned int nbr)
 {
 	int	len;

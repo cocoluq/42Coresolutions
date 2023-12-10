@@ -12,15 +12,19 @@
 
 #include "ft_printf.h"
 
-static int	length_of_pointer(unsigned long long *ptr)
+static int	ft_putptrhex(unsigned long long ptr)
 {
-	int	len;
+	int		len;
+	char	*base;
 
 	len = 0;
-	while (*ptr)
+	base = "0123456789abcdef";
+	if (ptr < 16)
+		len += ft_putchar(base[ptr]);
+	else
 	{
-		*ptr /= 16;
-		len++;
+		len += ft_putptrhex(ptr / 16);
+		len += ft_putchar(base[ptr % 16]);
 	}
 	return (len);
 }
@@ -29,13 +33,13 @@ int	ft_putptr(unsigned long long ptr)
 {
 	int	len;
 
-	len = length_of_pointer(&ptr);
+	len = 0;
 	if (!ptr)
 	{
-		write(1, "(nil)", 5);
-		return (5);
+		len += ft_putstr("(nil)");
+		return (len);
 	}
-	len += write(1, "0x", 2);
-	len += ft_puthex_low(ptr);
+	len += ft_putstr("0x");
+	len += ft_putptrhex(ptr);
 	return (len);
 }
