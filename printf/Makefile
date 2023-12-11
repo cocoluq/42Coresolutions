@@ -13,8 +13,8 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 NAME = libftprintf.a
-SCRS = ft_printf.c\
-		ft_putchar.c ft_putstr.c ft_putptr.c ft_puthex_low.c\
+SCRS = ft_printf.c \
+		ft_putchar.c ft_putstr.c ft_putptr.c ft_puthex_low.c \
 		ft_puthex_up.c ft_putun.c ft_putnbr.c
 OBJS = $(SCRS:.c=.o)
 
@@ -27,10 +27,10 @@ $(NAME): $(OBJS)
 all: $(NAME)
 
 clean:
-	rm -r $(OBJS)
+	rm -rf $(OBJS)
 
 fclean: clean
-	rm -r $(NAME)
+	rm -rf $(NAME)
 
 re: fclean all
 .PHONY: all, clean, fclean, re
