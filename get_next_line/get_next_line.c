@@ -12,11 +12,12 @@
 
 #include "get_next_line.h"
 
-static char	ft_strnew(size_t size)
+static char	*ft_strnew(size_t size)
 {
-	char *str;
+	char	*str;
 
-	if (!(str = malloc(sizeof(char) * (size + 1))))
+	str = malloc(sizeof(char) * (size + 1));
+	if (!str)
 		return (NULL);
 	while (size)
 		str[size--] = '\0';
@@ -25,24 +26,32 @@ static char	ft_strnew(size_t size)
 
 char	*get_next_line(int fd)
 {
-	static char *readlines;
-	char *bufline;
-	int bytes;
+	static char	*nonread;
+	char 		*buffer;
+	char		*readlines;
+	int			i;
 
-	if (!(bufline = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
+	nonread = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!nonread)
 		return (NULL);
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, bufline, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, nonread, 0) < 0)
 	{
-		free(bufline);
+		free(nonread);
 		return (NULL);
 	}
 	if (!readlines)
 		readlines = ft_strnew(0);
-	while (!ft_strchr(readlines, '\n') && (bytes = read(fd, bufline, BUFFER_SIZE)))
+	while (!ft_strchr(nonread, '\n') && i > 0)
 	{
-		bufline[bytes] = '\0';
-		readlines = ft_strjoin(readlines, bufline);
+		i = read(fd, nonread, BUFFER_SIZE);
+		readlines = ft_strjoin(readlines, nonread);
+		if (!readlines)
+		{
+			free(nonread);
+			free(readlines);
+			return (NULL);
+		}
 	}
-	free(bufline);
+	free(nonread);
 	return (readlines);
 }

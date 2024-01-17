@@ -31,14 +31,14 @@ char	*ft_strchr(const char *s, int c)
 
 size_t	ft_strlen(const char *s)
 {
-    size_t i;
+	size_t	i;
 
-    i = 0;
-    while (s[i])
-    {
-        i++;
-    }
-    return (i);
+	i = 0;
+	while (s[i])
+	{
+		i++;
+	}
+	return (i);
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)
@@ -67,4 +67,3 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	dst[i + j] = '\0';
 	return (dst);
 }
-
