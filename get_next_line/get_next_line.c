@@ -12,16 +12,32 @@
 
 #include "get_next_line.h"
 
-static char	*ft_strnew(size_t size)
+static int	buff_line(int fd, char *line, char *buff)
 {
-	char	*str;
+	int		i;
+	int		j;
+	int		ret;
 
-	str = malloc(sizeof(char) * (size + 1));
-	if (!str)
-		return (NULL);
-	while (size)
-		str[size--] = '\0';
-	return (str);
+	i = 0;
+	j = 0;
+	ret = 1;
+	while (buff[i] != '\n' && buff[i] != '\0')
+		i++;
+	if (buff[i] == '\n')
+	{
+		buff[i] = '\0';
+		ft_strcpy(line, buff);
+		ft_strcpy(buff, &buff[i + 1]);
+	}
+	else
+	{
+		ft_strcpy(line, buff);
+		ret = read(fd, buff, BUFF_SIZE);
+		if (ret == 0)
+			return (0);
+		buff[ret] = '\0';
+	}
+	return (1);
 }
 
 char	*get_next_line(int fd)
@@ -39,18 +55,17 @@ char	*get_next_line(int fd)
 		free(nonread);
 		return (NULL);
 	}
-	if (!readlines)
-		readlines = ft_strnew(0);
+	i = 1;
 	while (!ft_strchr(nonread, '\n') && i > 0)
 	{
 		i = read(fd, nonread, BUFFER_SIZE);
-		readlines = ft_strjoin(readlines, nonread);
-		if (!readlines)
-		{
-			free(nonread);
-			free(readlines);
-			return (NULL);
-		}
+		// readlines = ft_strjoin(readlines, nonread);
+		// if (!readlines)
+		// {
+		// 	free(nonread);
+		// 	free(readlines);
+		// 	return (NULL);
+		// }
 	}
 	free(nonread);
 	return (readlines);
