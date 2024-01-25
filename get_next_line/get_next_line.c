@@ -12,6 +12,8 @@
 
 #include "get_next_line.h"
 
+/* store the line of buffer_size in buffer, 
+   and join the nonread line */
 static int	buff_line(int fd, char *line, char *buff)
 {
 	int		i;
@@ -21,23 +23,22 @@ static int	buff_line(int fd, char *line, char *buff)
 	i = 0;
 	j = 0;
 	ret = 1;
-	while (buff[i] != '\n' && buff[i] != '\0')
+	// null the buffer
+	ft_bnull(buff, BUFFER_SIZE + 1);
+	// store the line of buffer_size in buffer
+	while (i < BUFFER_SIZE && ret != 0)
+	{
+		ret = read(fd, buff + i, 1);
+		if (buff[i] == '\n')
+			break ;
 		i++;
-	if (buff[i] == '\n')
-	{
-		buff[i] = '\0';
-		ft_strcpy(line, buff);
-		ft_strcpy(buff, &buff[i + 1]);
 	}
-	else
+	// join the nonread line
+	while (j < i)
 	{
-		ft_strcpy(line, buff);
-		ret = read(fd, buff, BUFF_SIZE);
-		if (ret == 0)
-			return (0);
-		buff[ret] = '\0';
+		line[j] = buff[j];
+		j++;
 	}
-	return (1);
 }
 
 char	*get_next_line(int fd)
@@ -47,8 +48,8 @@ char	*get_next_line(int fd)
 	char		*readlines;
 	int			i;
 
-	nonread = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!nonread)
+	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buffer)
 		return (NULL);
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, nonread, 0) < 0)
 	{
@@ -58,15 +59,10 @@ char	*get_next_line(int fd)
 	i = 1;
 	while (!ft_strchr(nonread, '\n') && i > 0)
 	{
-		i = read(fd, nonread, BUFFER_SIZE);
-		// readlines = ft_strjoin(readlines, nonread);
-		// if (!readlines)
-		// {
-		// 	free(nonread);
-		// 	free(readlines);
-		// 	return (NULL);
-		// }
+		i = buff_line(fd, nonread, buffer);
 	}
-	free(nonread);
+	free(buffer);
+	// get the readlines from nonread
+	// clean the read line in nonread
 	return (readlines);
 }

@@ -41,6 +41,21 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
+void	*ft_bnull(void *s, size_t n)
+{
+	size_t	i;
+	unsigned char	*p;
+
+	p = (char *)s;
+	i = 0;
+	while (i < n)
+	{
+		p[i] = '\0';
+		i++;
+	}
+	return (s);
+}
+
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*dst;
