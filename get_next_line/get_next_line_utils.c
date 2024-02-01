@@ -46,7 +46,7 @@ void	*ft_bnull(void *s, size_t n)
 	size_t	i;
 	unsigned char	*p;
 
-	p = (char *)s;
+	p = (unsigned char *)s;
 	i = 0;
 	while (i < n)
 	{

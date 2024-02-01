@@ -14,31 +14,28 @@
 
 /* store the line of buffer_size in buffer, 
    and join the nonread line */
-static int	buff_line(int fd, char *line, char *buff)
+static int	buff_line(int fd, char *line, char *buffer)
 {
 	int		i;
-	int		j;
 	int		ret;
+	int		bytes;
 
 	i = 0;
-	j = 0;
 	ret = 1;
 	// null the buffer
-	ft_bnull(buff, BUFFER_SIZE + 1);
+	ft_bnull(buffer, BUFFER_SIZE + 1);
 	// store the line of buffer_size in buffer
 	while (i < BUFFER_SIZE && ret != 0)
 	{
-		ret = read(fd, buff + i, 1);
-		if (buff[i] == '\n')
+		ret = read(fd, buffer + i, 1);
+		bytes += ret;
+		if (buffer[i] == '\n')
 			break ;
 		i++;
 	}
 	// join the nonread line
-	while (j < i)
-	{
-		line[j] = buff[j];
-		j++;
-	}
+	line = ft_strjoin(line, buffer);
+	return (bytes);
 }
 
 char	*get_next_line(int fd)
@@ -46,7 +43,7 @@ char	*get_next_line(int fd)
 	static char	*nonread;
 	char 		*buffer;
 	char		*readlines;
-	int			i;
+	int			bytes;
 
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
@@ -56,13 +53,29 @@ char	*get_next_line(int fd)
 		free(nonread);
 		return (NULL);
 	}
-	i = 1;
-	while (!ft_strchr(nonread, '\n') && i > 0)
+	bytes = 1;
+	if (!nonread)
+		nonread = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	while (!ft_strchr(nonread, '\n') && bytes > 0)
 	{
-		i = buff_line(fd, nonread, buffer);
+		bytes = buff_line(fd, nonread, buffer);
 	}
 	free(buffer);
 	// get the readlines from nonread
-	// clean the read line in nonread
+	// clean the read line stored in nonread
 	return (readlines);
 }
+/*
+#include <fcntl.h>
+#include <stdio.h>
+#include <unistd.h>
+
+int	main()
+{
+	char *ad = "FILE_PATH";
+	int fd = open(ad, O_RDONLY);
+	printf("%d", fd);
+	close(fd);
+	return (0);
+}
+*/
