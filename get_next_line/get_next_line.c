@@ -13,56 +13,44 @@
 #include "get_next_line.h"
 
 /* store the line of buffer_size in buffer, 
-   and join the nonread line */
-static int	buff_line(int fd, char *line, char *buffer)
+   and join the stash line */
+static int	buff_line(int fd, char **line, char **buffer)
 {
-	int		i;
-	int		ret;
 	int		bytes;
 
-	i = 0;
-	ret = 1;
 	// null the buffer
 	ft_bnull(buffer, BUFFER_SIZE + 1);
 	// store the line of buffer_size in buffer
-	while (i < BUFFER_SIZE && ret != 0)
-	{
-		ret = read(fd, buffer + i, 1);
-		bytes += ret;
-		if (buffer[i] == '\n')
-			break ;
-		i++;
-	}
-	// join the nonread line
-	line = ft_strjoin(line, buffer);
+	bytes = read(fd, *buffer, 1);
+	if (bytes < 0)
+		return (-1);
+	// join the stash line
+	*line = ft_strjoin(*line, buffer);
 	return (bytes);
 }
 
+
+
 char	*get_next_line(int fd)
 {
-	static char	*nonread;
+	static char	*stash;
 	char 		*buffer;
 	char		*readlines;
 	int			bytes;
 
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, nonread, 0) < 0)
-	{
-		free(nonread);
-		return (NULL);
-	}
 	bytes = 1;
-	if (!nonread)
-		nonread = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	while (!ft_strchr(nonread, '\n') && bytes > 0)
+	while (!ft_strchr(stash, '\n') && bytes > 0)
 	{
-		bytes = buff_line(fd, nonread, buffer);
+		bytes = buff_line(fd, &stash, &buffer);
 	}
 	free(buffer);
-	// get the readlines from nonread
-	// clean the read line stored in nonread
+	// get the readlines from stash
+	// clean the read line stored in stash but remain the position of the last read ends
 	return (readlines);
 }
 /*
