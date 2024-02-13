@@ -12,8 +12,12 @@
 
 #include "get_next_line.h"
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strchr(char *s, int c)
 {
+	if (!s)
+	{
+		return (NULL);
+	}
 	while (*s)
 	{
 		if (*s == (unsigned char)c)
@@ -29,11 +33,15 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-size_t	ft_strlen(const char *s)
+size_t	ft_strlen(char *s)
 {
 	size_t	i;
 
 	i = 0;
+	if (!s)
+	{
+		return (0);
+	}
 	while (s[i])
 	{
 		i++;
@@ -43,7 +51,7 @@ size_t	ft_strlen(const char *s)
 
 void	*ft_bnull(void *s, size_t n)
 {
-	size_t	i;
+	size_t			i;
 	unsigned char	*p;
 
 	p = (unsigned char *)s;
@@ -56,7 +64,7 @@ void	*ft_bnull(void *s, size_t n)
 	return (s);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*dst;
 	size_t	i;
@@ -81,32 +89,4 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	}
 	dst[i + j] = '\0';
 	return (dst);
-}
-
-char	*ft_strtrim(char const *s1, char const *set)
-{
-	char	*str;
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	if (!s1)
-	{
-		return (NULL);
-	}
-	j = ft_strlen(s1) - 1;
-	if (!set)
-	{
-		return (ft_strdup(s1));
-	}
-	while (s1[i] && ft_strchr(set, s1[i]))
-	{
-		i++;
-	}
-	while (s1[j] && ft_strchr(set, s1[j]))
-	{
-		j--;
-	}
-	str = ft_substr(s1, i, j - i + 1);
-	return (str);
 }

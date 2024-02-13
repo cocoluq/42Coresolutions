@@ -14,43 +14,102 @@
 
 /* store the line of buffer_size in buffer, 
    and join the stash line */
-static int	buff_line(int fd, char **line, char **buffer)
+static int	buff_line(int fd, char **line, char *buffer)
 {
 	int		bytes;
 
-	// null the buffer
 	ft_bnull(buffer, BUFFER_SIZE + 1);
-	// store the line of buffer_size in buffer
-	bytes = read(fd, *buffer, 1);
-	if (bytes < 0)
+	bytes = read(fd, buffer, BUFFER_SIZE);
+	if (bytes == -1 || !buffer)
+	{
+		free(*line);
 		return (-1);
-	// join the stash line
-	*line = ft_strjoin(*line, buffer);
+	}
+	if (bytes == 0)
+		return (0);
+	if (!*line)
+		*line = ft_strjoin("", buffer); //might be a problem: allocation of ""
+	else
+		*line = ft_strjoin(*line, buffer);
 	return (bytes);
 }
 
+/* extract the line from stash */
+static char	*extract_line(char *stash)
+{
+	char	*newline;
+	size_t	len;
+	size_t	i;
 
+	if (!stash)
+		return (NULL);
+	len = 0;
+	while (stash[len] && stash[len] != '\n')
+		len++;
+	newline = (char *)malloc(sizeof(char) * (len + 2));
+	if (!newline)
+		return (NULL);
+	i = 0;
+	while (stash[i] && stash[i] != '\n')
+	{
+		newline[i] = stash[i];
+		i++;
+	}
+	if (stash[i] == '\n')
+	{
+		newline[i] = stash[i];
+		i++;
+	}
+	newline[i] = '\0';
+	return (newline);
+}
+
+/* clean the stash */
+static char	*clean_stash(char *stash)
+{
+	char	*temp;
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = 0;
+	while (stash[i] && stash[i] != '\n')
+		i++;
+	if (!stash[i])
+	{
+		free(stash);
+		return (NULL);
+	}
+	temp = (char *)malloc(sizeof(char) * (ft_strlen(stash) - i + 1));
+	if (!temp)
+		return (NULL);
+	while (stash[i])
+		temp[j++] = stash[i++];
+	temp[j] = '\0';
+	free(stash);
+	return (temp);
+}
 
 char	*get_next_line(int fd)
 {
 	static char	*stash;
-	char 		*buffer;
+	char		*buffer;
 	char		*readlines;
 	int			bytes;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
 	bytes = 1;
 	while (!ft_strchr(stash, '\n') && bytes > 0)
-	{
-		bytes = buff_line(fd, &stash, &buffer);
-	}
+		bytes = buff_line(fd, &stash, buffer);
 	free(buffer);
-	// get the readlines from stash
-	// clean the read line stored in stash but remain the position of the last read ends
+	if (bytes <= 0)
+		return (NULL);
+	readlines = extract_line(stash);
+	stash = clean_stash(stash);
 	return (readlines);
 }
 /*
