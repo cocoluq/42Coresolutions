@@ -20,7 +20,7 @@ static int	buff_line(int fd, char **line, char *buffer)
 
 	ft_bnull(buffer, BUFFER_SIZE + 1);
 	bytes = read(fd, buffer, BUFFER_SIZE);
-	if (bytes == -1 || !buffer)
+	if (bytes < 0 || !buffer)
 	{
 		free(*line);
 		return (-1);
@@ -28,7 +28,7 @@ static int	buff_line(int fd, char **line, char *buffer)
 	if (bytes == 0)
 		return (0);
 	if (!*line)
-		*line = ft_strjoin("", buffer); //might be a problem: allocation of ""
+		*line = ft_strjoin(ft_newline(*line), buffer);
 	else
 		*line = ft_strjoin(*line, buffer);
 	return (bytes);
@@ -64,7 +64,7 @@ static char	*extract_line(char *stash)
 	return (newline);
 }
 
-/* clean the stash */
+/* clean the stash and return stash pointing the next line*/
 static char	*clean_stash(char *stash)
 {
 	char	*temp;
@@ -83,6 +83,7 @@ static char	*clean_stash(char *stash)
 	temp = (char *)malloc(sizeof(char) * (ft_strlen(stash) - i + 1));
 	if (!temp)
 		return (NULL);
+	i++;
 	while (stash[i])
 		temp[j++] = stash[i++];
 	temp[j] = '\0';
@@ -94,7 +95,7 @@ char	*get_next_line(int fd)
 {
 	static char	*stash;
 	char		*buffer;
-	char		*readlines;
+	char		*readline;
 	int			bytes;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
@@ -106,11 +107,14 @@ char	*get_next_line(int fd)
 	while (!ft_strchr(stash, '\n') && bytes > 0)
 		bytes = buff_line(fd, &stash, buffer);
 	free(buffer);
-	if (bytes <= 0)
+	if (bytes == -1 || !stash)
+	{
+		free(stash);
 		return (NULL);
-	readlines = extract_line(stash);
+	}
+	readline = extract_line(stash);
 	stash = clean_stash(stash);
-	return (readlines);
+	return (readline);
 }
 /*
 #include <fcntl.h>
@@ -119,9 +123,15 @@ char	*get_next_line(int fd)
 
 int	main()
 {
-	char *ad = "FILE_PATH";
+	char *line;
+	char *ad = "./test.txt";
 	int fd = open(ad, O_RDONLY);
-	printf("%d", fd);
+	printf("fd = %d\n", fd);
+	while ((line = get_next_line(fd)))
+	{
+		printf("%s\n", line);
+		free(line);
+	}
 	close(fd);
 	return (0);
 }

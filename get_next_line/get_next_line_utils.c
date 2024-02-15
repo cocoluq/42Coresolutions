@@ -64,6 +64,15 @@ void	*ft_bnull(void *s, size_t n)
 	return (s);
 }
 
+char	*ft_newline(char *s)
+{
+	s = (char *)malloc(sizeof(char) * 1);
+	if (!s)
+		return (NULL);
+	s[0] = '\0';
+	return (s);
+}
+
 char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*dst;
@@ -74,9 +83,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	j = 0;
 	dst = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!dst)
-	{
 		return (NULL);
-	}
 	while (s1[i])
 	{
 		dst[i] = s1[i];
