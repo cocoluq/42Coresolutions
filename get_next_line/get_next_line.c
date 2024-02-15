@@ -107,7 +107,7 @@ char	*get_next_line(int fd)
 	while (!ft_strchr(stash, '\n') && bytes > 0)
 		bytes = buff_line(fd, &stash, buffer);
 	free(buffer);
-	if (bytes == -1 || !stash)
+	if (bytes == -1 || !ft_strlen(stash))
 	{
 		free(stash);
 		return (NULL);
