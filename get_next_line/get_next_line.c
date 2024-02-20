@@ -23,6 +23,7 @@ static int	buff_line(int fd, char **line, char *buffer)
 	if (bytes < 0 || !buffer)
 	{
 		free(*line);
+		*line = NULL;
 		return (-1);
 	}
 	if (bytes == 0)
@@ -98,7 +99,7 @@ char	*get_next_line(int fd)
 	char		*readline;
 	int			bytes;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
@@ -107,9 +108,12 @@ char	*get_next_line(int fd)
 	while (!ft_strchr(stash, '\n') && bytes > 0)
 		bytes = buff_line(fd, &stash, buffer);
 	free(buffer);
-	if (bytes == -1 || !ft_strlen(stash))
+	if (bytes < 0)
+		return (NULL);
+	if (!ft_strlen(stash))
 	{
 		free(stash);
+		stash = NULL;
 		return (NULL);
 	}
 	readline = extract_line(stash);
@@ -129,7 +133,7 @@ int	main()
 	printf("fd = %d\n", fd);
 	while ((line = get_next_line(fd)))
 	{
-		printf("%s\n", line);
+		printf("%s", line);
 		free(line);
 	}
 	close(fd);
