@@ -120,15 +120,20 @@ char	*get_next_line(int fd)
 	stash = clean_stash(stash);
 	return (readline);
 }
-/*
+
 #include <fcntl.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <time.h>
 
 int	main()
 {
+	// clock_t start, end;
+	// double cpu_time_used;
+	// start = clock();
+
 	char *line;
-	char *ad = "./test.txt";
+	char *ad = "./test";
 	int fd = open(ad, O_RDONLY);
 	printf("fd = %d\n", fd);
 	while ((line = get_next_line(fd)))
@@ -137,6 +142,10 @@ int	main()
 		free(line);
 	}
 	close(fd);
+
+	// end = clock();
+	// cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+    // printf("Program took %f seconds to execute \n", cpu_time_used);
 	return (0);
 }
-*/
+
